@@ -1,17 +1,19 @@
 import { Account, Client, ID } from "appwrite"
 import conf from "../conf";
 
+console.log(conf.appwriteUrl);
 export class AuthService {
+    
     client = new Client()
     account;
-
+    
     constructor(){
         this.client
-            .setEndpoint(conf.appwriteUrl)
-            .setProject(conf.appwriteProjectId)
+        .setEndpoint(conf.appwriteUrl)
+        .setProject(conf.appwriteProjectId)
         this.account = new Account(this.client)
     }
-
+    
     async createAccount({email, password,name}) {
         try {
             const userAccount = await this.account.create({
@@ -20,7 +22,7 @@ export class AuthService {
                 password,
                 name
             })
-
+            
             if(userAccount){
                 this.loginUser({email,password})
             }else{
@@ -33,7 +35,7 @@ export class AuthService {
     }
     async loginUser({email,password}){
         try {
-            await this.account.createEmailPasswordSession({
+           return await this.account.createEmailPasswordSession({
                 email,
                 password
             })
@@ -47,8 +49,8 @@ export class AuthService {
             return await this.account.get()
         } catch (error) {
             console.error(error);
-            return null
         }
+        return null
     }
     async logout(){
         try {
