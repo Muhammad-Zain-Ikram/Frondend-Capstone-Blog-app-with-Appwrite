@@ -4,11 +4,14 @@ import PrimaryBtn from "./buttons/PrimaryBtn"
 import Navbar from "./header/Navbar"
 import ScreenSplit from "./ScreenSplit"
 import Footer from "./footer/Footer"
+import Input from "./Input"
 export {
     Container,
     Logo,
     PrimaryBtn,
     Navbar,
     ScreenSplit,
-    Footer
+    Footer,
+    Input,
+    
 }

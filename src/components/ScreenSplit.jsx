@@ -13,7 +13,7 @@ const ScreenSplit = ({
 }) => {
 
     const ImageSide = (
-        <div className='flex-1 flex items-center justify-center p-6 md:p-12'>
+        <div className='flex items-center justify-center p-6 md:p-12 md:sticky md:top-0 md:h-screen'>
             {image && (
                 <img
                     src={image}
@@ -25,7 +25,7 @@ const ScreenSplit = ({
     )
 
     const ContentSide = (
-        <div className='flex-1 flex items-center justify-center px-8 py-12 md:px-16 md:py-20'>
+        <div className='flex items-start md:items-center justify-center px-8 py-12 md:px-16 md:py-20 min-h-screen'>
             <div className='w-full max-w-lg space-y-6'>
 
                 {badge && (
@@ -68,12 +68,12 @@ const ScreenSplit = ({
     )
 
     return (
-        <div className={`w-full max-h-screen flex flex-col md:flex-row ${className} overflow-hidden`}>
-            {/* Image — always on top on mobile, left or right on desktop */}
+        <div className={`w-full flex flex-col md:flex-row ${className}`}>
+            {/* Image side */}
             <div className={`w-full md:flex-1 ${imageLeft ? 'md:order-first' : 'md:order-last'}`}>
                 {ImageSide}
             </div>
-            {/* Content — always below on mobile */}
+            {/* Content side */}
             <div className={`w-full md:flex-1 ${imageLeft ? 'md:order-last' : 'md:order-first'}`}>
                 {ContentSide}
             </div>
