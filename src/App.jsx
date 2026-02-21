@@ -9,6 +9,7 @@ import {LogOut, LogOutIcon, PenSquare} from "lucide-react"
 import { LandingPage } from './pages'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
+import PostCard from './components/PostCard'
 
 
 function App() {
@@ -32,9 +33,9 @@ function App() {
   },[])
   return (
     <>
-     {/* <LandingPage/> */}
-     <SignUpPage/>
-     <LoginPage/>
+    <PostCard/>
+    <PostCard/>
+    <PostCard/>
     </>
   )
 }
