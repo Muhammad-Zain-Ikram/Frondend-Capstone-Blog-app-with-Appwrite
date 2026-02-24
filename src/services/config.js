@@ -96,7 +96,7 @@ export class config{
 }
 
 
-const services = new config()
+const postServices = new config()
 
 
-export default services
+export default postServices

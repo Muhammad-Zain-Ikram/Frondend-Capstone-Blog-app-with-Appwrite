@@ -10,7 +10,8 @@ import { LandingPage } from './pages'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
 import PostCard from './components/PostCard'
-
+import { Editor } from '@tinymce/tinymce-react'
+import  conf from "./conf/index"
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -31,11 +32,53 @@ function App() {
     })
     .finally(()=> setLoading(false))
   },[])
+console.log(conf);
+
   return (
     <>
-    <PostCard/>
-    <PostCard/>
-    <PostCard/>
+    <div className= "bg-black">
+
+    {/* <Editor
+      apiKey={conf.tinyApiKey}
+      initialValue="welcome"
+      init={{
+        branding : false,
+        selector: 'textarea',  // change this value according to your HTML
+        height:500,
+        // width: 300,
+        initialValue: "Welcome",
+        menubar: true,
+            plugins: [
+              "image",
+              "advlist",
+              "autolink",
+              "lists",
+              "link",
+              "image",
+              "charmap",
+              "preview",
+              "anchor",
+              "searchreplace",
+              "visualblocks",
+              "code",
+              "fullscreen",
+              "insertdatetime",
+              "media",
+              "table",
+              "code",
+              "help",
+              "anchor",
+                "wordcount"
+              ],
+            toolbar:
+            "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
+            statusbar: false, 
+            content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
+          }}
+          // onEditorChange={onChange}
+          /> */}
+          </div>
+          <div className="">OOOOO</div>
     </>
   )
 }
