@@ -4,12 +4,43 @@ import './index.css'
 import store from "./store/store.js"
 import App from './App.jsx'
 import { Provider } from 'react-redux'
+import {AuthLayut, Layout} from "./components/index.js"
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Routes } from 'react-router-dom'
+import {AddPost, AllPost, EditPost, LandingPage,LoginPage, SignUpPage} from './pages/index.js'
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<App/>}>
+      <Route path='/' element={<LandingPage/>}/>
+
+      <Route path='/login' element={
+        <AuthLayut authentication={false}>
+            <LoginPage/>
+      </AuthLayut>}/>
+      <Route path='/sign-up' element={
+        <AuthLayut authentication={false}>
+            <SignUpPage/>
+      </AuthLayut>}/>
+      <Route path='/all-post' element={
+        <AuthLayut authentication>
+          <AllPost/>
+        </AuthLayut>
+      }/>
+      <Route path='/add-post' element={
+        <AuthLayut authentication>
+          <AddPost/>
+        </AuthLayut>
+      }/>
+      <Route path='/edit-post' element={
+        <AuthLayut authentication>
+          <EditPost/>
+        </AuthLayut>
+      }/>
+    </Route>
+  )
+)
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-
-  <StrictMode>
-    <App />
-  </StrictMode>,
+    <RouterProvider  router={router}/>
   </Provider>
 )
