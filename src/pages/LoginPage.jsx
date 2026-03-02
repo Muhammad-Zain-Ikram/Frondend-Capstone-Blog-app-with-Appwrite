@@ -8,13 +8,11 @@ import Signup from '../components/auth/SignUp'
 const LoginPage = () => {
   return (
     <>
-        <Navbar/>
         <ScreenSplit
         image={HeroImage}
    
     form={<Login/>}
     />
-<Footer/>
     </>
   )
 }

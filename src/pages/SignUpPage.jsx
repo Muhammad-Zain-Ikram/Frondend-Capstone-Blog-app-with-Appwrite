@@ -8,14 +8,12 @@ import Signup from '../components/auth/SignUp'
 const SignUpPage = () => {
   return (
     <>
-        <Navbar/>
         <ScreenSplit
         image={HeroImage}
   //   heading="Share your thoughts with the world"
   // subText="Create an account and start writing today."
     form={<Signup/>}
     />
-<Footer/>
     </>
   )
 }

@@ -12,7 +12,6 @@ import PostCard from "./PostCard"
 import RTE from "./RTE"
 import ScreenSplit from "./ScreenSplit"
 import Select from "./Select"
-import Layout from "./Layout"
 
 export {
     Login,
@@ -28,6 +27,5 @@ export {
     PostCard,
     RTE,
     ScreenSplit,
-    Select,
-    Layout
+    Select
 }

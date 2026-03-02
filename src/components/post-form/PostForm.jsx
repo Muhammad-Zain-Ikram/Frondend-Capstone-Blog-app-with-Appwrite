@@ -1,10 +1,11 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import fileService from '../../services/file'
 import postServices from '../../services/config'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import Select from '../Select'
+import {Input,Select,RTE,PrimaryBtn} from "../index"
+
 const PostForm = ({post}) => {
     const {register, handleSubmit, setValue, control, watch,getValues,setError} = useForm({
         defaultValues: {
@@ -16,6 +17,8 @@ const PostForm = ({post}) => {
     });
    const navigate = useNavigate()
    const authUser = useSelector(state => state.auth.userData)
+   console.log(authUser.data.$id);
+   
 
     const submit = async (data)=>{
         if(post){
@@ -40,7 +43,7 @@ const PostForm = ({post}) => {
                     const post = await postServices.createPost({
                         ...data,
                         featuredImage: file.$id,
-                        UserID: authUser.$id
+                        UserID: authUser.data.$id
                     })
                     if(post){
                         navigate(`/post/${post.$id}`)
@@ -72,7 +75,7 @@ const PostForm = ({post}) => {
     
     
   return (
-   <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+   <form onSubmit={handleSubmit(submit)} className="flex flex-wrap py-14">
             <div className="w-2/3 px-2">
                 <Input
                     label="Title :"
@@ -114,9 +117,9 @@ const PostForm = ({post}) => {
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
+                <PrimaryBtn type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
                     {post ? "Update" : "Submit"}
-                </Button>
+                </PrimaryBtn>
             </div>
         </form>
   )

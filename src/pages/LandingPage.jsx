@@ -1,15 +1,15 @@
 import React from 'react'
-import { Footer, Navbar, PrimaryBtn, ScreenSplit } from '../components'
+import {PrimaryBtn, ScreenSplit } from '../components'
 import HeroImage from "../assets/heroImage.svg"
-import { ArrowBigLeftIcon, ArrowRightIcon } from 'lucide-react'
+import { ArrowRightIcon } from 'lucide-react'
 import { useSelector } from 'react-redux';
 import postServices from '../services/config';
 
 const LandingPage = () => {
   const authStatus = useSelector(state => state.auth.authStatus);
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = React.useState([])
 
-  useEffect(() => {
+  React.useEffect(() => {
     postServices.getAllPost().then((posts) => {
       if (posts) {
         setPosts(posts.documents)

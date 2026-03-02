@@ -10,7 +10,6 @@ export class config{
     constructor(){
         this.client.setEndpoint(conf.appwriteUrl).setProject(conf.appwriteProjectId)
         this.database = new TablesDB(this.client)
-        this.bucket = new Storage(this.client)
     }
 
     async createPost({title, slug,content, featuredImage, UserID,status}){

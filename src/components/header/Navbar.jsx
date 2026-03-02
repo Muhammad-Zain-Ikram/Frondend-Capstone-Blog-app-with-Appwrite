@@ -8,7 +8,7 @@ import { LogOutIcon, PenSquare, Menu, X } from "lucide-react"
 
 function Navbar() {
     const dispatch = useDispatch()
-    // const navigate  = useNavigate()
+    const navigate  = useNavigate()
     const authState = useSelector((state) => state.auth.status)
     const [menuOpen, setMenuOpen] = useState(false)
 
@@ -21,26 +21,26 @@ function Navbar() {
             name: "Home",
             slug: "/",
             active: true,
-            // onclick: () => navigate("/"),
+            onclick: () => navigate("/"),
         },
         {
             name: "Sign Up",
             slug: "/sign-up",
             active: !authState,
-            // onclick: () => navigate("/sign-up"),
+            onclick: () => navigate("/sign-up"),
         },
         {
             name: "Login",
             slug: "/login",
             active: !authState,
-            // onclick: () => navigate("/login"),
+            onclick: () => navigate("/login"),
         },
         {
             icon: <PenSquare size={15} />,
             name: "Create",
-            slug: "/create-post",
+            slug: "/add-post",
             active: authState,
-            // onclick: () => navigate("/create-post"),
+            onclick: () => navigate("/add-post"),
         },
         {
             icon: <LogOutIcon size={15} />,
