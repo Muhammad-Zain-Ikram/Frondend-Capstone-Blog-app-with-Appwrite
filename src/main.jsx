@@ -40,7 +40,7 @@ const router = createBrowserRouter(
         </AuthLayut>
       }/>
 
-      <Route path='/blog/:slug' element={
+      <Route path='/post/:slug' element={
         <AuthLayut authentication>
           <Post/>
         </AuthLayut>

@@ -12,7 +12,9 @@ export class config{
         this.database = new TablesDB(this.client)
     }
 
-    async createPost({title, slug,content, featuredImage, UserID,status}){
+    async createPost({title, slug,content, featuredImage, userID,status}){
+        console.log(status, typeof status, "kkkd")
+
        try {
          return await this.database.createRow({
              databaseId: conf.appwriteDatabaseId,
@@ -22,8 +24,8 @@ export class config{
                  title,
                  content,
                  featuredImage,
-                 UserID,
-                 status
+                 userID,
+                 status : Boolean(status)
              }
          })
        } catch (error) {
@@ -66,13 +68,16 @@ export class config{
         }
     }
 
-    async getPost({slug}){
+    async getPost(slug){
+        console.log(slug,"::;;;")
         try {
-            await this.database.getRow({
+            const post=  await this.database.getRow({
                 databaseId: conf.appwriteDatabaseId,
-                tableId: conf.appwriteDatabaseId,
+                tableId: conf.appwriteCollectionId,
                 rowId: slug
             })
+            console.log("come",post);
+            return post
         } catch (error) {
             console.error(error);
             return false

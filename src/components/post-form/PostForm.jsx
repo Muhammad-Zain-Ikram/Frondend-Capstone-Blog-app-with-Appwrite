@@ -12,7 +12,7 @@ const PostForm = ({post}) => {
             title: post?.title || "",
             slug: post?.$id || "",
             content: post?.content || "",
-            status: post?.status || "active",
+            status: post?.status || true,
         },
     });
    const navigate = useNavigate()
@@ -38,12 +38,12 @@ const PostForm = ({post}) => {
             }
             else{
                 const file = data.image[0]?await fileService.fileUpload(data.image[0]):setError("file Error", "Issue in uploading file")
-                
                 if(file) {
+                    console.log("::::", authUser.data.$id)
                     const post = await postServices.createPost({
                         ...data,
                         featuredImage: file.$id,
-                        UserID: authUser.data.$id
+                        userID : authUser.data.$id
                     })
                     if(post){
                         navigate(`/post/${post.$id}`)
@@ -112,7 +112,7 @@ const PostForm = ({post}) => {
                     </div>
                 )}
                 <Select
-                    options={["active", "inactive"]}
+                    options={[{label : "active", value: true},{label: "inactive", value : false}]}
                     label="Status"
                     className="mb-4"
                     {...register("status", { required: true })}

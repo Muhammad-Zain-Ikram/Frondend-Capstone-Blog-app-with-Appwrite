@@ -10,18 +10,20 @@ export default function Post() {
     const [post, setPost] = useState(null);
     const { slug } = useParams();
     const navigate = useNavigate();
+console.log("slgu found", post);
 
     const userData = useSelector((state) => state.auth.userData);
 
     const isAuthor = post && userData ? post.userId === userData.$id : false;
 
     useEffect(() => {
-        if (slug) {
-            postServices.getPost(slug).then((post) => {
-                if (post) setPost(post);
-                else navigate("/");
-            });
-        } else navigate("/");
+       if (slug) {
+    const comepost = postServices.getPost( slug )
+    setPost(comepost)
+console.log(comepost);
+
+        } else{
+         navigate("/")};
     }, [slug, navigate]);
 
     const deletePost = () => {
