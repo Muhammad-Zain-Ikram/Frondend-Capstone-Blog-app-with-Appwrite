@@ -12,13 +12,15 @@ const LandingPage = () => {
   React.useEffect(() => {
     postServices.getAllPost().then((posts) => {
       if (posts) {
+        console.log(posts);
+        
         setPosts(posts.documents)
       }
     })
   }, [])
 
   if (authStatus) {
-    retrun(<div className='w-full py-8'>
+    return (<div className='w-full py-8'>
       <Container>
         <div className='flex flex-wrap'>
           {posts.map((post) => (
