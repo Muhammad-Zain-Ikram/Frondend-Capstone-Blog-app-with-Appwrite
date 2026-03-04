@@ -4,7 +4,7 @@ import './index.css'
 import store from "./store/store.js"
 import App from './App.jsx'
 import { Provider } from 'react-redux'
-import {AuthLayut} from "./components/index.js"
+import {AuthLayout} from "./components/index.js"
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Routes } from 'react-router-dom'
 import {AddPost, AllPost, EditPost, LandingPage,LoginPage, Post, SignUpPage} from './pages/index.js'
 const router = createBrowserRouter(
@@ -13,37 +13,37 @@ const router = createBrowserRouter(
       <Route path='/' element={<LandingPage/>}/>
 
       <Route path='/login' element={
-        <AuthLayut authentication={false}>
+        <AuthLayout authentication={false}>
             <LoginPage/>
-      </AuthLayut>}/>
+      </AuthLayout>}/>
 
       <Route path='/sign-up' element={
-        <AuthLayut authentication={false}>
+        <AuthLayout authentication={false}>
             <SignUpPage/>
-      </AuthLayut>}/>
+      </AuthLayout>}/>
 
       <Route path='/all-post' element={
-        <AuthLayut authentication>
+        <AuthLayout>
           <AllPost/>
-        </AuthLayut>
+        </AuthLayout>
       }/>
 
       <Route path='/add-post' element={
-        <AuthLayut authentication>
+        <AuthLayout authentication>
           <AddPost/>
-        </AuthLayut>
+        </AuthLayout>
       }/>
 
       <Route path='/edit-post' element={
-        <AuthLayut authentication>
+        <AuthLayout authentication>
           <EditPost/>
-        </AuthLayut>
+        </AuthLayout>
       }/>
 
       <Route path='/post/:slug' element={
-        <AuthLayut authentication>
+        <AuthLayout>
           <Post/>
-        </AuthLayut>
+        </AuthLayout>
       }/>
     </Route>
   )

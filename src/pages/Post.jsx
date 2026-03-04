@@ -10,84 +10,74 @@ export default function Post() {
     const [post, setPost] = useState(null);
     const { slug } = useParams();
     const navigate = useNavigate();
-    cosnt 
+    const [loading, setLoading] = useState(true);
 
     const userData = useSelector((state) => state.auth.userData);
-
-    const isAuthor = post && userData ? post.userId === userData.$id : false;
-
-    useEffect(() => {
-        async function fetchPost() {
-            if (!slug) {
-                navigate("/")
-                return
-            }
-
-            const res = await postServices.getPost(slug)
-            console.log(res, "kkkk");
-
-            try {
-                const res = await postServices.getPost(slug);
-
-                if (!res) {
-                    navigate("/");
-                } else {
-                    setPost(res);
-                }
-            } catch (error) {
-                navigate("/");
-            } finally {
-                setLoading(false);
-            }
-        }
+    console.log( post.userID);
     
-
-  fetchPost()
-}, [slug, navigate])
-
-console.log(post);
-
-
-const deletePost = () => {
-    postServices.DeletePost(post.$id).then((status) => {
-        if (status) {
-            appwriteService.deleteFile(post.featuredImage);
+    useEffect(() => {
+        setLoading(true);
+    async function fetchPost() {
+        try {
+            console.log("Fetching post with slug:", slug); // ✅ Is slug correct?
+            const res = await postServices.getPost(slug);
+            console.log("API Response:", res);            // ✅ What does res look like?
+            console.log("Response type:", typeof res);    // ✅ object? null? undefined?
+            
+            if (!res) {
+                console.log("res is falsy, navigating to /"); // ✅ Which branch runs?
+                navigate("/");
+            } else {
+                setPost(res);
+            }
+        } catch (error) {
+            console.log("ERROR caught:", error);           
+            console.log("Error message:", error.message);
             navigate("/");
+        } finally {
+            setLoading(false);
         }
-    });
-};
+    }
+    fetchPost();
+}, [slug]); 
 
-console.log("slgu found", post);
-return post ? (
-    <div className="py-8">
-        <Container>
-            <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-                <img
-                    src={fileService.FilePreview(post.featuredImage)}
-                    alt={post.title}
-                    className="rounded-xl"
-                />
+const isAuthor = post && userData ? post.userID === userData.data.$id : false;
+    const deletePost = () => {
+        postServices.DeletePost(post.$id).then((status) => {
+            if (status) {
+                fileService.DeleteFile(post.featuredImage); 
+                navigate("/");
+            }
+        });
+    };
 
-                {isAuthor && (
-                    <div className="absolute right-6 top-6">
-                        <Link to={`/edit-post/${post.$id}`}>
-                            <PrimaryBtn bgColor="bg-green-500" className="mr-3">
-                                Edit
-                            </PrimaryBtn>
-                        </Link>
-                        <PrimaryBtn bgColor="bg-red-500" onClick={deletePost}>
-                            Delete
-                        </PrimaryBtn>
-                    </div>
-                )}
-            </div>
-            <div className="w-full mb-6">
-                <h1 className="text-2xl font-bold">{post.title}</h1>
-            </div>
-            <div className="browser-css">
-                {parse(post.content)}
-            </div>
-        </Container>
-    </div>
-) : null;
+    return loading ? (
+        <div>Loading...</div>
+    ) : !post ? <p>Post not found</p>:(
+        <div className="py-8">
+            <Container>
+                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+                    <img
+                        src={`${fileService.FilePreview(post.featuredImage)}&mode=admin`}
+                        alt={post.title}
+                        className="rounded-xl"
+                    />
+                    {isAuthor && (
+                        <div className="absolute right-6 top-6">
+                            <Link to={`/edit-post/${post.$id}`}>
+                                <PrimaryBtn bgColor="bg-green-500" className="mr-3">Edit</PrimaryBtn>
+                            </Link>
+                            <PrimaryBtn bgColor="bg-red-500" onClick={deletePost}>Delete</PrimaryBtn>
+                        </div>
+                    )}
+                </div>
+                <div className="w-full mb-6">
+                    <h1 className="text-2xl font-bold">{post.title}</h1>
+                </div>
+                <div className="browser-css">
+                    {parse(post.content)}
+                </div>
+            </Container>
+        </div>
+    );
 }

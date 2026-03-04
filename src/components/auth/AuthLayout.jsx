@@ -1,23 +1,52 @@
+// import { Loader } from "lucide-react"
+// import { useEffect, useState } from "react"
+// import { useSelector } from "react-redux"
+// import { useNavigate } from "react-router-dom"
+
+// export default function Protected({children, authentication = true}) {
+// console.log(authentication);
+
+//     const navigate = useNavigate()
+//     const [loader, setLoader] = useState(true)
+//     const authStatus = useSelector(state => state.auth.status)
+
+//     useEffect(() => {
+//         if (authentication && !authStatus) {
+//             navigate("/login")
+//         }
+
+//         // Route is for non-logged users only (like login/register page)
+//         if (!authentication && authStatus) {
+//             navigate("/")
+//         }
+//         setLoader(false)
+//     }, [authStatus, authentication])
+
+//   return loader ? <Loader/> : <>{children}</>
+// }
+
 import { Loader } from "lucide-react"
-import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 
-export default function Protected({children, authentication = true}) {
+export default function Protected({ children, authentication = true }) {
 
-    const navigate = useNavigate()
-    const [loader, setLoader] = useState(true)
-    const authStatus = useSelector(state => state.auth.status)
+    const { status: authStatus, loading } = useSelector(state => state.auth)
 
-    useEffect(() => {
-        
-        if(authentication && authStatus !== authentication){
-            navigate("/login")
-        } else if(!authentication && authStatus !== authentication){
-            navigate("/")
-        }
-        setLoader(false)
-    }, [authStatus, navigate, authentication])
+    // Wait until auth check is complete
+    if (loading) {
+        return <Loader />
+    }
 
-  return loader ? <Loader/> : <>{children}</>
+    // If route requires login and user not logged in
+    if (authentication && !authStatus) {
+        return <Navigate to="/login" replace />
+    }
+
+    // If route is guest-only and user is logged in
+    if (!authentication && authStatus) {
+        return <Navigate to="/" replace />
+    }
+
+    return children
 }

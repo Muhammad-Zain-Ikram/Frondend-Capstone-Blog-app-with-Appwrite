@@ -86,7 +86,7 @@ export class config{
 
     async getAllPost(queries=[Query.equal("status", true)]){
         try {
-            await this.database.listRows({
+            return await this.database.listRows({
                 databaseId:conf.appwriteDatabaseId,
                 tableId: conf.appwriteCollectionId,
                 queries

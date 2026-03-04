@@ -1,31 +1,33 @@
 import React from 'react'
-import {PrimaryBtn, ScreenSplit } from '../components'
+import {Container, PostCard, PrimaryBtn, ScreenSplit } from '../components'
 import HeroImage from "../assets/heroImage.svg"
 import { ArrowRightIcon } from 'lucide-react'
 import { useSelector } from 'react-redux';
 import postServices from '../services/config';
 
 const LandingPage = () => {
-  const authStatus = useSelector(state => state.auth.authStatus);
+  const authStatus = useSelector(state => state.auth.status);
   const [posts, setPosts] = React.useState([])
+console.log(authStatus);
 
   React.useEffect(() => {
     postServices.getAllPost().then((posts) => {
       if (posts) {
-        console.log(posts);
+        console.log("???",posts);
         
-        setPosts(posts.documents)
+        setPosts(posts.rows)
+        console.log("///", posts.rows);
       }
     })
   }, [])
 
-  if (authStatus) {
+  if (posts) {
     return (<div className='w-full py-8'>
       <Container>
-        <div className='flex flex-wrap'>
+        <div className='w-full'>
           {posts.map((post) => (
-            <div key={post.$id} className='p-2 w-1/4'>
-              <PostCard {...post} />
+            <div key={post.$id} className='p-2 w-full'>
+              <PostCard title={post.title} content={post.content} slug={post.$id}  featuredImage={post.featuredImage}/>
             </div>
           ))}
         </div>

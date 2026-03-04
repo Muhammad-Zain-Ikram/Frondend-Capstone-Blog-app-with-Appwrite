@@ -1,6 +1,6 @@
 import Login from "./auth/Login"
 import SignUp from "./auth/SignUp"
-import AuthLayut from "./auth/AuthLayout"
+import AuthLayout from "./auth/AuthLayout"
 import PrimaryBtn from "./buttons/PrimaryBtn"
 import Container from "./container/container"
 import Footer from "./footer/Footer"
@@ -16,7 +16,7 @@ import Select from "./Select"
 export {
     Login,
     SignUp,
-    AuthLayut,
+    AuthLayout,
     PrimaryBtn,
     Container,
     Footer,

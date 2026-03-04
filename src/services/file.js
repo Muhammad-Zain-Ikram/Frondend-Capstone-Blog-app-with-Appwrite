@@ -36,12 +36,15 @@ export class FileService {
         }
     }
 
-    async FilePreview(fileId){
+      FilePreview(fileId){
         try {
-            return await this.bucket.getFilePreview({
-                bucketId: conf.appwriteBucketId,
-                fileId
-            })
+           const result =  this.bucket.getFilePreview({
+    bucketId:  conf.appwriteBucketId,
+    fileId: fileId
+});
+
+        console.log("here",result);
+        return result
         } catch (error) {
             console.error(error);
             

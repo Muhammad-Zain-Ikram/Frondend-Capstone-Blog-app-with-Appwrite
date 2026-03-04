@@ -5,11 +5,13 @@ import postServices from '../services/config';
 function AllPosts() {
     const [posts, setPosts] = useState([])
     useEffect(() => {}, [])
-    postServices.getPosts([]).then((posts) => {
+    postServices.getAllPost([]).then((posts) => {
         if (posts) {
             setPosts(posts.documents)
         }
     })
+    console.log();
+    
   return (
     <div className='w-full py-8'>
         <Container>
