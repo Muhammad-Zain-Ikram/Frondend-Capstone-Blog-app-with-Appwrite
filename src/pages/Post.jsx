@@ -13,19 +13,19 @@ export default function Post() {
     const [loading, setLoading] = useState(true);
 
     const userData = useSelector((state) => state.auth.userData);
-    console.log( post.userID);
+    // console.log( post.userID);
     
     useEffect(() => {
         setLoading(true);
     async function fetchPost() {
         try {
-            console.log("Fetching post with slug:", slug); // ✅ Is slug correct?
+            console.log("Fetching post with slug:", slug); 
             const res = await postServices.getPost(slug);
-            console.log("API Response:", res);            // ✅ What does res look like?
-            console.log("Response type:", typeof res);    // ✅ object? null? undefined?
+            console.log("API Response:", res);            
+            console.log("Response type:", typeof res);   
             
             if (!res) {
-                console.log("res is falsy, navigating to /"); // ✅ Which branch runs?
+                console.log("res is falsy, navigating to /"); 
                 navigate("/");
             } else {
                 setPost(res);
