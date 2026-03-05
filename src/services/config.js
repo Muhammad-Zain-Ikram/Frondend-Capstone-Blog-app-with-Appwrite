@@ -55,13 +55,15 @@ export class config{
 
     async DeletePost ({slug}){
         try {
+            console.log("delete", slug);
+            
             await this.database.deleteRow({
                 databaseId: conf.appwriteDatabaseId,
                 tableId: conf.appwriteCollectionId,
                 rowId: slug
             })
 
-            return null
+            return true
         } catch (error) {
             console.error(error);
             

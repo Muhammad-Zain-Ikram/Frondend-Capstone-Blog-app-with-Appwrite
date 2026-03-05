@@ -22,7 +22,7 @@ const Login = () => {
             if (session) {
                 const userData = await authService.getCurrentUser()
                 if (userData) dispatch(loginAction(userData))
-                // navigate("/")
+                navigate("/")
             }
         } catch (err) {
             setError(err.message)

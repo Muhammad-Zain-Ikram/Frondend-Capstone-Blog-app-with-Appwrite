@@ -38,10 +38,13 @@ export class FileService {
 
       FilePreview(fileId){
         try {
-           const result =  this.bucket.getFilePreview({
-    bucketId:  conf.appwriteBucketId,
-    fileId: fileId
-});
+            console.log("fileid form post form", fileId);
+            
+            const result =  this.bucket.getFilePreview({
+                bucketId:  conf.appwriteBucketId,
+                fileId: fileId
+            });
+            console.log("result form post form", result);
 
         console.log("here",result);
         return result

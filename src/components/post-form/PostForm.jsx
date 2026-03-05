@@ -15,9 +15,10 @@ const PostForm = ({post}) => {
             status: post?.status || true,
         },
     });
+
+    
    const navigate = useNavigate()
    const authUser = useSelector(state => state.auth.userData)
-   console.log(authUser.data.$id);
    
 
     const submit = async (data)=>{
@@ -39,11 +40,11 @@ const PostForm = ({post}) => {
             else{
                 const file = data.image[0]?await fileService.fileUpload(data.image[0]):setError("file Error", "Issue in uploading file")
                 if(file) {
-                    console.log("::::", authUser.data.$id)
+                    console.log("::::", authUser.$id)
                     const post = await postServices.createPost({
                         ...data,
                         featuredImage: file.$id,
-                        userID : authUser.data.$id
+                        userID : authUser.$id
                     })
                     if(post){
                         navigate(`/post/${post.$id}`)
@@ -92,7 +93,7 @@ const PostForm = ({post}) => {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+                <RTE label="Content :" name="content" control={control} initialValue={post ? post.content : ""} />
             </div>
             <div className="w-1/3 px-2">
                 <Input
@@ -105,7 +106,7 @@ const PostForm = ({post}) => {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFilePreview(post.featuredImage)}
+                            src={`${fileService.FilePreview(post.featuredImage)}&mode=admin`}
                             alt={post.title}
                             className="rounded-lg"
                         />

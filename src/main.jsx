@@ -23,7 +23,7 @@ const router = createBrowserRouter(
       </AuthLayout>}/>
 
       <Route path='/all-post' element={
-        <AuthLayout>
+        <AuthLayout authentication>
           <AllPost/>
         </AuthLayout>
       }/>
@@ -34,14 +34,14 @@ const router = createBrowserRouter(
         </AuthLayout>
       }/>
 
-      <Route path='/edit-post' element={
+      <Route path='/edit-post/:slug' element={
         <AuthLayout authentication>
           <EditPost/>
         </AuthLayout>
       }/>
 
       <Route path='/post/:slug' element={
-        <AuthLayout>
+        <AuthLayout authentication>
           <Post/>
         </AuthLayout>
       }/>

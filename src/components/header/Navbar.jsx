@@ -13,7 +13,11 @@ function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false)
 
     const logoutHandler = () => {
-        authService.logout().then(() => dispatch(logout()))
+        authService.logout().then(() => {
+            dispatch(logout())
+            navigate("/login")
+        })
+
     }
 
     const navItems = [

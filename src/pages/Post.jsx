@@ -41,12 +41,17 @@ export default function Post() {
     fetchPost();
 }, [slug]); 
 
-const isAuthor = post && userData ? post.userID === userData.data.$id : false;
+const isAuthor = post && userData ? post.userID === userData.$id : false;
     const deletePost = () => {
-        postServices.DeletePost(post.$id).then((status) => {
+        console.log("post", post.$id);
+        
+        postServices.DeletePost({slug:post.$id}).then((status) => {
             if (status) {
+                console.log("notapp");
                 fileService.DeleteFile(post.featuredImage); 
                 navigate("/");
+                console.log("app");
+                
             }
         });
     };

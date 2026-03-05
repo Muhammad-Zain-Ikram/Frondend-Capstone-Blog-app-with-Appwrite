@@ -4,12 +4,14 @@ import postServices from '../services/config';
 
 function AllPosts() {
     const [posts, setPosts] = useState([])
-    useEffect(() => {}, [])
-    postServices.getAllPost([]).then((posts) => {
-        if (posts) {
-            setPosts(posts.documents)
-        }
-    })
+    useEffect(() => {
+
+        postServices.getAllPost([]).then((posts) => {
+            if (posts) {
+                setPosts(posts.documents)
+            }
+        })
+    }, [])
     console.log();
     
   return (
