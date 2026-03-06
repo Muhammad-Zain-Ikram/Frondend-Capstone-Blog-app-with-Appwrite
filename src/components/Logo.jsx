@@ -1,5 +1,4 @@
-import React from 'react'
-import logo from "../../public/logo.png"
+
 import { PenSquare } from 'lucide-react'
 const Logo = ({ width = 100 }) => {
   return (

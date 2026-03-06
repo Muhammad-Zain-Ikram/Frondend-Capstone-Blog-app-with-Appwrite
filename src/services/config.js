@@ -1,43 +1,40 @@
 import { Client, Query, TablesDB } from "appwrite"
 import conf from "../conf"
 
-
-export class config{
-    client = new Client()
+export const client = new Client()
+export class config {
     database
-    bucket
 
-    constructor(){
-        this.client.setEndpoint(conf.appwriteUrl).setProject(conf.appwriteProjectId)
-        this.database = new TablesDB(this.client)
+    constructor() {
+        client.setEndpoint(conf.appwriteUrl).setProject(conf.appwriteProjectId)
+        this.database = new TablesDB(client)
     }
 
-    async createPost({title, slug,content, featuredImage, userID,status}){
-        console.log(status, typeof status, "kkkd")
+    async createPost({ title, slug, content, featuredImage, userID, status }) {
 
-       try {
-         return await this.database.createRow({
-             databaseId: conf.appwriteDatabaseId,
-             tableId: conf.appwriteCollectionId,
-             rowId: slug,
-             data:{
-                 title,
-                 content,
-                 featuredImage,
-                 userID,
-                 status : Boolean(status)
-             }
-         })
-       } catch (error) {
-        console.error(error);
-        return null
-        
-       }
-    }
-    
-    async UpdatePost(slug, {title,content, featuredImage, status}) {
         try {
-             return await this.database.updateRow(
+            return await this.database.createRow({
+                databaseId: conf.appwriteDatabaseId,
+                tableId: conf.appwriteCollectionId,
+                rowId: slug,
+                data: {
+                    title,
+                    content,
+                    featuredImage,
+                    userID,
+                    status: Boolean(status)
+                }
+            })
+        } catch (error) {
+            console.error(error);
+            return null
+
+        }
+    }
+
+    async UpdatePost(slug, { title, content, featuredImage, status }) {
+        try {
+            return await this.database.updateRow(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
@@ -45,18 +42,17 @@ export class config{
                     title,
                     content,
                     featuredImage,
-                    status
+                    status: JSON.parse(status)
                 }
             )
         } catch (error) {
-            
+
         }
     }
 
-    async DeletePost ({slug}){
+    async DeletePost({ slug }) {
         try {
-            console.log("delete", slug);
-            
+
             await this.database.deleteRow({
                 databaseId: conf.appwriteDatabaseId,
                 tableId: conf.appwriteCollectionId,
@@ -66,19 +62,17 @@ export class config{
             return true
         } catch (error) {
             console.error(error);
-            
+
         }
     }
 
-    async getPost(slug){
-        console.log(slug,"::;;;")
+    async getPost(slug) {
         try {
-            const post=  await this.database.getRow({
+            const post = await this.database.getRow({
                 databaseId: conf.appwriteDatabaseId,
                 tableId: conf.appwriteCollectionId,
                 rowId: slug
             })
-            console.log("come",post);
             return post
         } catch (error) {
             console.error(error);
@@ -86,16 +80,16 @@ export class config{
         }
     }
 
-    async getAllPost(queries=[Query.equal("status", true)]){
+    async getAllPost(queries = [Query.equal("status", true)]) {
         try {
             return await this.database.listRows({
-                databaseId:conf.appwriteDatabaseId,
+                databaseId: conf.appwriteDatabaseId,
                 tableId: conf.appwriteCollectionId,
                 queries
             })
         } catch (error) {
             console.error(error);
-            
+
         }
     }
 

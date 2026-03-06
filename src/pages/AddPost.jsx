@@ -1,11 +1,9 @@
-import React from 'react'
-import { PostForm,Container } from '../components'
-import { useNavigate } from 'react-router-dom'
+import { PostForm, Container } from '../components'
 const AddPost = () => {
-    
+
   return (
     <Container>
-        <PostForm/>
+      <PostForm />
     </Container>
   )
 }

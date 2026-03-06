@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import fileService from '../../services/file'
 import postServices from '../../services/config'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import {Input,Select,RTE,PrimaryBtn} from "../index"
+import { Input, Select, RTE, PrimaryBtn } from "../index"
 
-const PostForm = ({post}) => {
-    const {register, handleSubmit, setValue, control, watch,getValues,setError} = useForm({
+const PostForm = ({ post }) => {
+
+    const { register, handleSubmit, setValue, control, watch, getValues, setError } = useForm({
         defaultValues: {
             title: post?.title || "",
             slug: post?.$id || "",
@@ -16,68 +17,70 @@ const PostForm = ({post}) => {
         },
     });
 
-    
-   const navigate = useNavigate()
-   const authUser = useSelector(state => state.auth.userData)
-   
 
-    const submit = async (data)=>{
-        if(post){
-            const file = data.image[0]?await fileService.fileUpload(data.image[0]):setError("file Error", "Issue in uploading file")
-            
-            if(file){
+    const navigate = useNavigate()
+    const authUser = useSelector(state => state.auth.userData)
+
+
+    const submit = async (data) => {
+        if (post) {
+            const file = data.image[0] ? await fileService.fileUpload(data.image[0]) : false
+
+            if (file) {
                 await fileService.DeleteFile(post.featuredImage)
             }
-            
-            const updatedPost =  await postServices.UpdatePost(post.$id,{
+
+            const updatedPost = await postServices.UpdatePost(post.$id, {
                 ...data,
                 featuredImage: file ? file.$id : undefined
             })
-            
-            if(updatedPost) navigate(`/post/${updatedPost.$id}`)
-                
+
+            if (updatedPost) {
+
+                navigate(`/post/${updatedPost.$id}`)
             }
-            else{
-                const file = data.image[0]?await fileService.fileUpload(data.image[0]):setError("file Error", "Issue in uploading file")
-                if(file) {
-                    console.log("::::", authUser.$id)
-                    const post = await postServices.createPost({
-                        ...data,
-                        featuredImage: file.$id,
-                        userID : authUser.$id
-                    })
-                    if(post){
-                        navigate(`/post/${post.$id}`)
-                    }
+
+        }
+        else {
+            const file = data.image[0] ? await fileService.fileUpload(data.image[0]) : setError("file Error", "Issue in uploading file")
+            if (file) {
+                const post = await postServices.createPost({
+                    ...data,
+                    featuredImage: file.$id,
+                    userID: authUser.$id
+                })
+                if (post) {
+                    navigate(`/post/${post.$id}`)
                 }
             }
+        }
     }
 
     const slugTransform = useCallback(
-      (val) => {
-        if(val && typeof val == "string")
-        return val.toLowerCase().trim().replace(/[^a-zA-Z\d]+/g, "-")
-    return ""
-      },
-      [],
+        (val) => {
+            if (val && typeof val == "string")
+                return val.toLowerCase().trim().replace(/[^a-zA-Z\d]+/g, "-")
+            return ""
+        },
+        [],
     )
 
     useEffect(() => {
-      const subscription = watch((value,{name})=>{
-            if(name == "title"){
-                setValue("slug", slugTransform(value.title),{shouldValidate:true})
+        const subscription = watch((value, { name }) => {
+            if (name == "title") {
+                setValue("slug", slugTransform(value.title), { shouldValidate: true })
             }
-      })
-    
-      return () => {
-        subscription.unsubscribe()
-      }
-    }, [watch,slugTransform,setValue])
-    
-    
-  return (
-   <form onSubmit={handleSubmit(submit)} className="flex flex-wrap py-14">
-            <div className="w-2/3 px-2">
+        })
+
+        return () => {
+            subscription.unsubscribe()
+        }
+    }, [watch, slugTransform, setValue])
+
+
+    return (
+        <form onSubmit={handleSubmit(submit)} className="flex flex-col lg:flex-row py-14 justify-center items-center lg:items-start">
+            <div className="w-fill lg:w-2/3 px-2">
                 <Input
                     label="Title :"
                     placeholder="Title"
@@ -95,7 +98,7 @@ const PostForm = ({post}) => {
                 />
                 <RTE label="Content :" name="content" control={control} initialValue={post ? post.content : ""} />
             </div>
-            <div className="w-1/3 px-2">
+            <div className="w-1/2 lg:w-1/3 px-2 py-6 lg:py-0">
                 <Input
                     label="Featured Image :"
                     type="file"
@@ -113,7 +116,7 @@ const PostForm = ({post}) => {
                     </div>
                 )}
                 <Select
-                    options={[{label : "active", value: true},{label: "inactive", value : false}]}
+                    options={[{ label: "active", value: true }, { label: "inactive", value: false }]}
                     label="Status"
                     className="mb-4"
                     {...register("status", { required: true })}
@@ -123,7 +126,7 @@ const PostForm = ({post}) => {
                 </PrimaryBtn>
             </div>
         </form>
-  )
+    )
 }
 
 export default PostForm

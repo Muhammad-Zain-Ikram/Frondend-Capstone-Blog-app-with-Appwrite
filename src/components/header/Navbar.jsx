@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Container, Logo, PrimaryBtn } from "../index"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -8,7 +8,7 @@ import { LogOutIcon, PenSquare, Menu, X } from "lucide-react"
 
 function Navbar() {
     const dispatch = useDispatch()
-    const navigate  = useNavigate()
+    const navigate = useNavigate()
     const authState = useSelector((state) => state.auth.status)
     const [menuOpen, setMenuOpen] = useState(false)
 

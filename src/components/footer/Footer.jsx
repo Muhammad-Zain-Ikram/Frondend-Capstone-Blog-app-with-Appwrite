@@ -8,7 +8,7 @@ const Footer = () => {
     const links = {
         Platform: [
             { name: 'Home',        to: '/' },
-            { name: 'Write Blog',  to: '/create-post' },
+            { name: 'Write Blog',  to: '/add-post' },
             { name: 'Login',       to: '/login' },
             { name: 'Sign Up',     to: '/sign-up' },
         ],

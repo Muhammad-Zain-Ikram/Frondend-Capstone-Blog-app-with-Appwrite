@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import authService from '../../services/auth'
 import { login } from '../../store/features/auth.slice'
 import { Input, PrimaryBtn } from "../index"
 import { UserRoundKey } from 'lucide-react'
 
 const Signup = () => {
-  // const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -19,14 +17,11 @@ const Signup = () => {
       setError('')
       setLoading(true)
       const user = await authService.createAccount(data)
-      console.log("login ",user);
       if (user) {
         const sessionUser = await authService.getCurrentUser()
-        console.log("login ",user, sessionUser);
         if (sessionUser) {
           dispatch(login(sessionUser))
-          console.log("login", sessionUser);
-          
+
           navigate("/")
         }
       }

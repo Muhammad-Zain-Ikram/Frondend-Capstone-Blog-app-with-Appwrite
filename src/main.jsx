@@ -4,47 +4,43 @@ import './index.css'
 import store from "./store/store.js"
 import App from './App.jsx'
 import { Provider } from 'react-redux'
-import {AuthLayout} from "./components/index.js"
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Routes } from 'react-router-dom'
-import {AddPost, AllPost, EditPost, LandingPage,LoginPage, Post, SignUpPage} from './pages/index.js'
+import { AuthLayout } from "./components/index.js"
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
+import { AddPost, EditPost, LandingPage, LoginPage, Post, SignUpPage } from './pages/index.js'
+
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<App/>}>
-      <Route path='/' element={<LandingPage/>}/>
+    <Route path='/' element={<App />}>
+      <Route path='/' element={<LandingPage />} />
 
       <Route path='/login' element={
         <AuthLayout authentication={false}>
-            <LoginPage/>
-      </AuthLayout>}/>
+          <LoginPage />
+        </AuthLayout>} />
 
       <Route path='/sign-up' element={
         <AuthLayout authentication={false}>
-            <SignUpPage/>
-      </AuthLayout>}/>
+          <SignUpPage />
+        </AuthLayout>} />
 
-      <Route path='/all-post' element={
-        <AuthLayout authentication>
-          <AllPost/>
-        </AuthLayout>
-      }/>
 
       <Route path='/add-post' element={
         <AuthLayout authentication>
-          <AddPost/>
+          <AddPost />
         </AuthLayout>
-      }/>
+      } />
 
       <Route path='/edit-post/:slug' element={
         <AuthLayout authentication>
-          <EditPost/>
+          <EditPost />
         </AuthLayout>
-      }/>
+      } />
 
       <Route path='/post/:slug' element={
         <AuthLayout authentication>
-          <Post/>
+          <Post />
         </AuthLayout>
-      }/>
+      } />
     </Route>
   )
 )
@@ -52,7 +48,7 @@ const router = createBrowserRouter(
 createRoot(document.getElementById('root')).render(
   <StrictMode>
   <Provider store={store}>
-    <RouterProvider  router={router}/>
+    <RouterProvider router={router} />
   </Provider>
   </StrictMode>
 )

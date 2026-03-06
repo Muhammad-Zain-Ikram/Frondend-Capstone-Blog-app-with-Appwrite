@@ -1,25 +1,12 @@
-import React from 'react'
-import {Container, PostCard, PrimaryBtn, ScreenSplit } from '../components'
+import { Container, PostCard, PrimaryBtn, ScreenSplit } from '../components'
 import HeroImage from "../assets/heroImage.svg"
 import { ArrowRightIcon } from 'lucide-react'
 import { useSelector } from 'react-redux';
-import postServices from '../services/config';
+
 
 const LandingPage = () => {
-  const authStatus = useSelector(state => state.auth.status);
-  const [posts, setPosts] = React.useState([])
-console.log(authStatus);
+  const posts = useSelector(state => state.post.posts)
 
-  React.useEffect(() => {
-    postServices.getAllPost().then((posts) => {
-      if (posts) {
-        console.log("???",posts);
-        
-        setPosts(posts.rows)
-        console.log("///", posts.rows);
-      }
-    })
-  }, [])
 
   if (posts) {
     return (<div className='w-full py-8'>
@@ -27,7 +14,7 @@ console.log(authStatus);
         <div className='w-full'>
           {posts.map((post) => (
             <div key={post.$id} className='p-2 w-full'>
-              <PostCard title={post.title} content={post.content} slug={post.$id}  featuredImage={post.featuredImage}/>
+              <PostCard title={post.title} content={post.content} slug={post.$id} featuredImage={post.featuredImage} />
             </div>
           ))}
         </div>
@@ -42,5 +29,5 @@ console.log(authStatus);
     subText="A modern blogging platform built for creators."
     actions={<PrimaryBtn icon={<ArrowRightIcon size={18} />}>Write Blog</PrimaryBtn>}
   />)
-  }
-  export default LandingPage;
+}
+export default LandingPage;

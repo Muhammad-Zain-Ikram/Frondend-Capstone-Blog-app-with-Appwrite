@@ -1,38 +1,57 @@
 import { useEffect, useState } from 'react'
-import { useDispatch} from 'react-redux'
-import authService from "./services/auth" 
-import {login, logout} from "./store/features/auth.slice"
-import  conf from "./conf/index"
-import { Navbar,Footer } from './components'
+import { useDispatch } from 'react-redux'
+import authService from "./services/auth"
+import { login, logout } from "./store/features/auth.slice"
+import conf from "./conf/index"
+import { Navbar, Footer } from './components'
 import { Outlet } from 'react-router-dom'
+import postServices from './services/config'
+import { setPosts } from './store/features/post.slice'
+import { client } from './services/config'
 
 function App() {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
 
-  useEffect(()=>{
+  useEffect(() => {
     authService.getCurrentUser()
-    .then((data)=> {
-      if (data) {
-        dispatch(login({data}))
-      } else {
-        dispatch(logout())
+      .then((data) => {
+        if (data) {
+
+          dispatch(login(data))
+        } else {
+          dispatch(logout())
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+
+      })
+      .finally(() => setLoading(false))
+    const unsubscribe = client.subscribe(
+      `databases.${conf.appwriteDatabaseId}.tables.${conf.appwriteCollectionId}.rows`,
+      (response) => {
+
+        postServices.getAllPost().then((posts) => {
+          dispatch(setPosts(posts.rows))
+        });
+
       }
-    })
-    .catch((e)=>{
-      console.error(e);
-      
-    })
-    .finally(()=> setLoading(false))
-  },[])
-console.log(conf);
+    );
+    postServices.getAllPost().then((posts) => {
+
+      dispatch(setPosts(posts.rows))
+    }).catch((e) => console.error(e));
+
+    return () => unsubscribe()
+  }, [])
 
   return (
-   <>
-      <Navbar/>
-          <Outlet/>
-      <Footer/>
-   </>
+    <>
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </>
   )
 }
 

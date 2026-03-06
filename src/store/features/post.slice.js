@@ -1,20 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 
 const initialState = {
-    post:[]
+    posts: [],
+
 }
+
 const postSlice = createSlice({
     name: "post",
     initialState,
-    reducers:{
-        addPost : (state, action)=>{
-            state.post.push(action.payload)
-        },
-        deletePost :(state, action)=>{
-            state.post.filter((post)=> post.id !== action.payload)
+    reducers: {
+        setPosts: (state, action) => {
+            state.posts = action.payload
         }
     }
 })
 
-export const {addPost,deletePost} = postSlice.actions
-export default postSlice
+export const { setPosts } = postSlice.actions
+export default postSlice.reducer

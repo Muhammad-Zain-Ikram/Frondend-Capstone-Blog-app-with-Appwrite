@@ -1,3 +1,4 @@
+
 const SIZE_CLASSES = {
   sm: "px-3 py-1.5 text-xs gap-1 md:px-4 md:py-2 md:text-sm md:gap-1.5",
   md: "px-4 py-2 text-sm gap-1.5 md:px-6 md:py-2.5 md:text-base md:gap-2",
@@ -11,13 +12,14 @@ function PrimaryBtn({
   className = "",
   type = "button",
   size = "md",
+  bgColor
 }) {
+
   return (
     <button
       type={type}
       onClick={onClick}
       style={{
-        backgroundColor: "#00bf63",
         boxShadow: "0 4px 14px rgba(0,191,99,0.35)",
       }}
       className={`
@@ -29,6 +31,7 @@ function PrimaryBtn({
         select-none whitespace-nowrap
         ${SIZE_CLASSES[size] ?? SIZE_CLASSES.md}
         ${className}
+        ${bgColor || "bg-[#00bf63]"}
       `.trim()}
     >
       {icon && (
