@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import authService from '../../services/auth'
 import { logout } from '../../store/features/auth.slice'
 import { LogOutIcon, PenSquare, Menu, X } from "lucide-react"
+import { setPosts } from '../../store/features/post.slice'
 
 function Navbar() {
     const dispatch = useDispatch()
@@ -16,6 +17,7 @@ function Navbar() {
         authService.logout().then(() => {
             dispatch(logout())
             navigate("/login")
+            dispatch(setPosts(""))
         })
 
     }

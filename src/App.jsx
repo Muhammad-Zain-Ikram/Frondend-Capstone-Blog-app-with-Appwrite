@@ -28,6 +28,7 @@ function App() {
 
       })
       .finally(() => setLoading(false))
+
     const unsubscribe = client.subscribe(
       `databases.${conf.appwriteDatabaseId}.tables.${conf.appwriteCollectionId}.rows`,
       (response) => {
