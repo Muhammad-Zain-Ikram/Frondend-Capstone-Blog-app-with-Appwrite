@@ -8,7 +8,7 @@ import { Outlet } from 'react-router-dom'
 import postServices from './services/config'
 import { setPosts } from './store/features/post.slice'
 import { client } from './services/config'
-
+import { Analytics } from '@vercel/analytics/react'
 function App() {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
@@ -52,6 +52,7 @@ function App() {
       <Navbar />
       <Outlet />
       <Footer />
+      <Analytics/>
     </>
   )
 }
